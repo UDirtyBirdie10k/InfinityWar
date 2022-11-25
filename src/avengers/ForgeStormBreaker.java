@@ -1,4 +1,7 @@
 package avengers;
+
+import java.lang.reflect.Array;
+
 /**
  * 
  * Given the 2D array where the values are the flux intensity data of the 
@@ -58,13 +61,38 @@ public class ForgeStormBreaker {
 	    // Set the input file.
         StdIn.setFile(forgeStormbreakerInputFile);
         // WRITE YOUR CODE HERE TO INPUT FROM THE INPUT FILE
+        int rows = StdIn.readInt();
+        int cols = StdIn.readInt();
+        int fluxTotal = 0;
 
-        // Calculate the flux
-        // WRITE YOUR CODE HERE TO CALCULATE THE FLUX USING THE INPUT FILE
+        int [][] array = new int[rows][cols];
+
+        for(int i = 0; i < rows; i ++){
+            for(int j = 0; j < cols; j++){
+
+                array[i][j]= StdIn.readInt();
+
+            }
+        }
+
+
+        for(int i = 0; i < rows; i ++){
+            for(int j = 0; j < cols; j++){
+
+                fluxTotal = fluxTotal + array[i][j];
+                //StdOut.println(fluxTotal);
+
+            }
+        }    
+        
+        
+        
         
         // Set the output file.
         StdOut.setFile(forgeStormbreakerOutputFile);
         // WRITE YOUR CODE HERE TO OUTPUT TO THE OUTPUT FILE
+
+        StdOut.print(fluxTotal);
 
     }
 }
