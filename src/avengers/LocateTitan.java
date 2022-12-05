@@ -1,4 +1,4 @@
-package avengers;
+ package avengers;
 /**
  * 
  * Using the Adjacency Matrix of n vertices and starting from Earth (vertex 0), 
@@ -59,8 +59,91 @@ public class LocateTitan {
             StdOut.println("Execute: java LocateTitan <INput file> <OUTput file>");
             return;
         }
+ 
 
     	// WRITE YOUR CODE HERE
+
+        String LocateTitanInputFile  = args[0];
+        String LocateTitanOutputFile = args[1];
+
+        int numberOfGenerators = StdIn.readInt();
+
+        int generatorNumber = StdIn.readInt();
+
+        double[] generatorNumberFunctionality = new double[generatorNumber];
+
+        private void getMinCostNode(int[] minCost, int numberOfGenerators){
+
+                int temp = 0;
+                int lowest = 0;
+                for(int i = 0; i < numberOfGenerators; i++){
+
+                    if(minCost[i] < minCost[i+1] && i <= 5){
+
+                        int lowest = i;
+
+                    }
+
+                }
+            }
+        }
+
+        for(int i = 0; i < numberOfGenerators; i ++){
+            
+            double funcionalityValue = StdIn.readDouble();
+
+            generatorNumberFunctionality[i] = funcionalityValue;
+
+        }
+
+        double[][] adjMatrix = new double[numberOfGenerators][numberOfGenerators];
+
+        for(int i = 0; i < numberOfGenerators; i ++){
+            for(int j = i; j < numberOfGenerators; j++){
+
+                int edgeValues = StdIn.readInt();
+
+                adjMatrix[i][j] = edgeValues;
+
+                adjMatrix[i][j] = (adjMatrix[i][j] / (generatorNumberFunctionality[i]*generatorNumberFunctionality[j]));
+
+            }
+        }
+
+        int minCost[] = new int[numberOfGenerators];
+        boolean[] dijkstraSet = new boolean[numberOfGenerators];
+        
+        for(int i = 0; i < numberOfGenerators; i++){
+            if(i == 0){
+                minCost[i]= 0;
+            }
+            else{
+                minCost[i] = Integer.MAX_VALUE;
+            }
+        }
+
+        for(int i = 0; i < numberOfGenerators -1; i++){
+
+            int currentSource = getMinCostNode();
+
+            dijkstraSet[currentSource] = true;
+
+            for(int w = 0; w < currentSource; w++){
+
+                if(dijkstraSet[currentSource] == false && minCost[currentSource] != Integer.MAX_VALUE && minCost[w] > minCost[currentSource]
+                  + cost from currentSource to w){
+                    minCost[w] = minCost[currentSource] + cost from currentSource to w;
+                  }
+
+            }
+        }
+
+        
+        StdOut.setFile(LocateTitanOutputFile);
+
+        StdOut.print(minCost[5]);
+
+
 
     }
 }
