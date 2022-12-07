@@ -52,6 +52,23 @@
  */
 
 public class LocateTitan {
+
+    private static int getMinCostNode(int[] minCost, boolean[]dijkstraSet){
+
+        int lowest = 0;
+        int temp = Integer.MAX_VALUE;        
+
+        for(int i = 0; i < minCost.length; i++){
+
+            if(minCost[i] < temp && dijkstraSet[i] == false){
+    
+                temp = minCost[i];
+                lowest = i;
+
+            }
+        }
+        return lowest;
+    }
 	
     public static void main (String [] args) {
     	
@@ -66,46 +83,35 @@ public class LocateTitan {
         String LocateTitanInputFile  = args[0];
         String LocateTitanOutputFile = args[1];
 
+        StdIn.setFile(LocateTitanInputFile);
+
         int numberOfGenerators = StdIn.readInt();
 
-        int generatorNumber = StdIn.readInt();
+        double[][] generatorNumberFunctionality = new double[numberOfGenerators][2];
 
-        double[] generatorNumberFunctionality = new double[generatorNumber];
+        for(int i = 0; i < numberOfGenerators; i ++){
+            for(int j = 0; j < 2; j++){
 
-        private void getMinCostNode(int[] minCost, int numberOfGenerators){
+                generatorNumberFunctionality[i][j] = StdIn.readDouble();
 
-                int temp = 0;
-                int lowest = 0;
-                for(int i = 0; i < numberOfGenerators; i++){
+            }
 
-                    if(minCost[i] < minCost[i+1] && i <= 5){
+        }
 
-                        int lowest = i;
+        int[][] adjMatrix = new int[numberOfGenerators][numberOfGenerators];
 
-                    }
+        for(int i = 0; i < numberOfGenerators; i ++){
+            for(int j = 0; j < numberOfGenerators; j++){
 
-                }
+                adjMatrix[i][j] = StdIn.readInt();
+
             }
         }
 
         for(int i = 0; i < numberOfGenerators; i ++){
-            
-            double funcionalityValue = StdIn.readDouble();
+            for(int j = 0; j < numberOfGenerators; j++){
 
-            generatorNumberFunctionality[i] = funcionalityValue;
-
-        }
-
-        double[][] adjMatrix = new double[numberOfGenerators][numberOfGenerators];
-
-        for(int i = 0; i < numberOfGenerators; i ++){
-            for(int j = i; j < numberOfGenerators; j++){
-
-                int edgeValues = StdIn.readInt();
-
-                adjMatrix[i][j] = edgeValues;
-
-                adjMatrix[i][j] = (adjMatrix[i][j] / (generatorNumberFunctionality[i]*generatorNumberFunctionality[j]));
+                adjMatrix[i][j] = (int)(adjMatrix[i][j] / (generatorNumberFunctionality[j][1] * generatorNumberFunctionality[i][1]));
 
             }
         }
@@ -113,7 +119,7 @@ public class LocateTitan {
         int minCost[] = new int[numberOfGenerators];
         boolean[] dijkstraSet = new boolean[numberOfGenerators];
         
-        for(int i = 0; i < numberOfGenerators; i++){
+        for(int i = 0; i < minCost.length; i++){
             if(i == 0){
                 minCost[i]= 0;
             }
@@ -122,28 +128,33 @@ public class LocateTitan {
             }
         }
 
-        for(int i = 0; i < numberOfGenerators -1; i++){
+        for(int i = 0; i < minCost.length -1; i++){
 
-            int currentSource = getMinCostNode();
+            int currentSource = getMinCostNode(minCost, dijkstraSet);
 
             dijkstraSet[currentSource] = true;
 
-            for(int w = 0; w < currentSource; w++){
+            for(int w = 0; w < minCost.length; w++){
+                if(adjMatrix[currentSource][w] > 0){
 
-                if(dijkstraSet[currentSource] == false && minCost[currentSource] != Integer.MAX_VALUE && minCost[w] > minCost[currentSource]
-                  + cost from currentSource to w){
-                    minCost[w] = minCost[currentSource] + cost from currentSource to w;
-                  }
-
+                    if(dijkstraSet[w] == false && minCost[currentSource] != Integer.MAX_VALUE && minCost[w] > minCost[currentSource]
+                    + adjMatrix[currentSource][w]){
+                        minCost[w] = minCost[currentSource] + adjMatrix[currentSource][w];
+                    }
+                }
             }
         }
 
         
         StdOut.setFile(LocateTitanOutputFile);
 
-        StdOut.print(minCost[5]);
-
-
+        StdOut.println(minCost[numberOfGenerators-1]);
 
     }
+
+
 }
+
+
+
+
