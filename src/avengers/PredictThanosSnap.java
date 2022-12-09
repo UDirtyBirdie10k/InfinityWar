@@ -69,118 +69,69 @@ public class PredictThanosSnap {
         
     	// WRITE YOUR CODE HERE
 
-        String PredictThanosSnapInputFile = args[0];
-        String PredictThanosSnapOutputFile = args[1]; 
+        String PredictThanosSnapInputFile  = args[0];
+        String PredictThanosSnapOutputFile = args[1];
 
         StdIn.setFile(PredictThanosSnapInputFile);
 
-        long assignedseed = StdIn.readLong();
-        int thanosSnap = StdIn.readInt();
-        int [][] blackWitchery  = new int [thanosSnap][thanosSnap];
-        ArrayList<Integer> Prediction = new ArrayList<>();
+        long seed = StdIn.readLong();
+        int numberOfPeople = StdIn.readInt();
 
-        for (int i = 0; i < thanosSnap; i++)
-        {
-            for (int j=0; j<thanosSnap; j++){
-                blackWitchery[i][j] = StdIn.readInt();
-                }
-        }
-
-        StdRandom.setSeed(assignedseed);
-
-           for (int i=0; i<thanosSnap; i++){ 
-            for (int j=0; j<thanosSnap; j++)
-            {
-                if (StdRandom.uniform()<= 0.5){
-                    blackWitchery[i][j] = 0;
-                    blackWitchery[j][i] = 0;
-                 }else{
-                    Prediction.add(i);
-                    }
-            }
-
-        }
-        boolean lol =  true;
-        for(int i  = 0; i < thanosSnap; i++){
-                 lol = false;
-            for(int j = 0; j < thanosSnap; j++){
-                if(blackWitchery[i][j] == 1){
-                    lol = true;
-                }
-            }
-            if(lol ==  false){
-                break;
-            }
-        }
-
-        StdOut.setFile(PredictThanosSnapOutputFile);
-        StdOut.println(lol);
-    }
-}
-
-//         String PredictThanosSnapInputFile  = args[0];
-//         String PredictThanosSnapOutputFile = args[1];
-
-//         StdIn.setFile(PredictThanosSnapInputFile);
-
-//         long seed = StdIn.readLong();
-//         int numberOfPeople = StdIn.readInt();
-
-//         int[][] adjMatrix = new int[numberOfPeople][numberOfPeople]; 
-//         ArrayList<Integer> arl = new ArrayList<Integer>();
+        int[][] adjMatrix = new int[numberOfPeople][numberOfPeople]; 
+        ArrayList<Integer> arl = new ArrayList<Integer>();
  
 
-//         for(int i = 0; i < numberOfPeople; i++){
-//             for(int j = 0; j < numberOfPeople; j++){
+        for(int i = 0; i < numberOfPeople; i++){
+            for(int j = 0; j < numberOfPeople; j++){
 
-//                 adjMatrix[i][j] = StdIn.readInt();
+                adjMatrix[i][j] = StdIn.readInt();
 
-//             }
-//         }
+            }
+        }
 
-//         StdRandom.setSeed(seed);
+        StdRandom.setSeed(seed);
 
 
-//         for (int i = 0; i < numberOfPeople; i++) { 
-//             for(int j = 0; j < numberOfPeople; j++){
+        for (int i = 0; i < numberOfPeople; i++) { 
+            for(int j = 0; j < numberOfPeople; j++){
                 
-//                 if (StdRandom.uniform() <= 0.5) { 
+                if (StdRandom.uniform() <= 0.5) { 
                     
-//                     adjMatrix[i][j] = 0;
-//                     adjMatrix[j][i] = 0;
+                    adjMatrix[i][j] = 0;
+                    adjMatrix[j][i] = 0;
 
-//                 }
-//                 else{
+                }
+                else{
 
-//                     arl.add(i);
+                    arl.add(i);
 
-//                 }
+                }
             
-//             }
-//         }
+            }
+        }
 
-//         boolean connect = true;
+        boolean connect = true;
 
-//         for(int i = 0; i < numberOfPeople; i++){
+        for(int i = 0; i < numberOfPeople; i++){
 
-//             connect = false;
+            connect = false;
 
-//             for(int j = 0; j < numberOfPeople; j++){
+            for(int j = 0; j < numberOfPeople; j++){
                     
-//                     if(adjMatrix[i][j] == 1){
+                    if(adjMatrix[i][j] == 1){
                         
-//                         connect = true;
+                        connect = true;
                     
-//                     }
-//             }
-//             if(connect == false){
-//                 break;
-//             }
+                    }
+            }
+            if(connect == false){
+                break;
+            }
             
-//         }
+        }
         
-//         StdOut.setFile(PredictThanosSnapOutputFile);
+        StdOut.setFile(PredictThanosSnapOutputFile);
 
-//         StdOut.print(connect);
-//     }
-// }
+        StdOut.print(connect);
+    }
+}
