@@ -49,6 +49,27 @@ package avengers;
 
 
 public class MindStoneNeighborNeurons {
+
+    private static String getMindStone(String []neuronName, String[][]connectingSynapses){
+
+        String mindStone = neuronName[0];        
+
+        for(int i = 0; i < neuronName.length; i++){
+            for(int j = 0; j < connectingSynapses.length; j++){
+
+                if(neuronName[i].equals(connectingSynapses[j][0])){
+                    break;
+                }
+                else{
+                    mindStone = neuronName[i];
+                }
+
+
+            }
+            
+        }
+        return mindStone;
+    }
     
     public static void main (String [] args) {
         
@@ -59,5 +80,51 @@ public class MindStoneNeighborNeurons {
     	
     	// WRITE YOUR CODE HERE
         
+        String MindStoneNeighborNeuronsInputFile  = args[0];
+        String MindStoneNeighborNeuronsOutputFile = args[1];
+
+        StdIn.setFile(MindStoneNeighborNeuronsInputFile);
+        StdOut.setFile(MindStoneNeighborNeuronsOutputFile);
+
+
+        int numberOfNeurons = StdIn.readInt();
+
+        String[] neuronName = new String[numberOfNeurons];
+
+        for(int i = 0; i < numberOfNeurons; i ++){
+        
+                neuronName[i] = StdIn.readString();
+
+        }
+
+        int numberOfSynapses = StdIn.readInt();
+
+        String[][] connectingSynapses = new String[numberOfSynapses][2];
+
+        for(int i = 0; i < numberOfSynapses; i ++){
+            for(int j = 0; j < 2; j++){
+
+                connectingSynapses[i][j] = StdIn.readString();
+
+            }
+
+        }
+
+        String finalMindStone = getMindStone(neuronName, connectingSynapses);
+
+        for(int i = 0; i < connectingSynapses.length; i++){
+
+            if(connectingSynapses[i][1].equals(finalMindStone)){
+
+                StdOut.println(connectingSynapses[i][0]);
+
+            }
+
+        }
+
+
+
+
+
     }
 }

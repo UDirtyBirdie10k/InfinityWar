@@ -59,6 +59,22 @@ package avengers;
 
 public class UseTimeStone {
 
+    private static void dfs(int i, boolean [] visited, int[][] adjMatrix ){
+
+        if(!visited[i]){
+            visited[i] =true;
+        }
+
+        for(int j = 0; i < adjMatrix.length; i++){
+
+                if(adjMatrix[i][j] == 1 && (!visited[j])){
+                    dfs(j, visited, adjMatrix);
+                }               
+            }
+    
+
+    }
+
     public static void main (String [] args) {
     	
         if ( args.length < 2 ) {
@@ -68,5 +84,54 @@ public class UseTimeStone {
 
     	// WRITE YOUR CODE HERE
         
+        String UseTimeStoneInputFile  = args[0];
+        String UseTimeStoneOutputFile = args[1];
+
+        StdIn.setFile(UseTimeStoneInputFile);
+        StdOut.setFile(UseTimeStoneOutputFile);
+
+
+        int expectedUtility = StdIn.readInt();
+        int numberOfEvents = StdIn.readInt();
+
+        int possibleTimelines = 1; 
+        int greaterThanEU = 0;
+
+        int[] eventNumberAndValue = new int[numberOfEvents]; 
+
+        int[][] adjMatrix = new int[numberOfEvents][numberOfEvents];
+
+        boolean [] visited = new boolean[numberOfEvents];
+
+        for(int i = 0; i < numberOfEvents; i++){
+
+            eventNumberAndValue[i] = StdIn.readInt();
+
+        }
+
+        for(int i = 0; i < numberOfEvents; i++){
+            for(int j = 0; j < numberOfEvents; j++){
+
+                adjMatrix[i][j] = StdIn.readInt();
+
+            }
+        }
+
+        for(int i = 0; i < numberOfEvents; i++){
+
+            if(!visited[i]){
+                
+                dfs(i,visited, adjMatrix);
+                possibleTimelines += 1;
+
+            }
+            
+        }
+
+        StdOut.setFile(UseTimeStoneOutputFile);
+        StdOut.println(possibleTimelines);
+        StdOut.println(greaterThanEU);
+
+
     }
 }
