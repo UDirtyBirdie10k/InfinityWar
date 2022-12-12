@@ -85,9 +85,6 @@ public class ForgeStormBreaker {
             }
         }    
         
-        
-        
-        
         // Set the output file.
         StdOut.setFile(forgeStormbreakerOutputFile);
         // WRITE YOUR CODE HERE TO OUTPUT TO THE OUTPUT FILE
