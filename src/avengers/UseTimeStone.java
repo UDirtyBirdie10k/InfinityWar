@@ -1,5 +1,7 @@
 package avengers;
 
+import java.util.ArrayList;
+
 /**
  * Given a starting event and an Adjacency Matrix representing a graph of all possible 
  * events once Thanos arrives on Titan, determine the total possible number of timelines 
@@ -59,21 +61,6 @@ package avengers;
 
 public class UseTimeStone {
 
-    private static void dfs(int i, boolean [] visited, int[][] adjMatrix ){
-
-        if(!visited[i]){
-            visited[i] =true;
-        }
-
-        for(int j = 0; i < adjMatrix.length; i++){
-
-                if(adjMatrix[i][j] == 1 && (!visited[j])){
-                    dfs(j, visited, adjMatrix);
-                }               
-            }
-    
-
-    }
 
     public static void main (String [] args) {
     	
@@ -82,56 +69,84 @@ public class UseTimeStone {
             return;
         }
 
-    	// WRITE YOUR CODE HERE
-        
-        String UseTimeStoneInputFile  = args[0];
+        // WRITE YOUR CODE HERE
+
+
+        String UseTimeStoneInputFile = args[0];
         String UseTimeStoneOutputFile = args[1];
-
+        
         StdIn.setFile(UseTimeStoneInputFile);
-        StdOut.setFile(UseTimeStoneOutputFile);
-
-
+        
         int expectedUtility = StdIn.readInt();
+        
         int numberOfEvents = StdIn.readInt();
 
-        int possibleTimelines = 1; 
-        int greaterThanEU = 0;
 
-        int[] eventNumberAndValue = new int[numberOfEvents]; 
-
-        int[][] adjMatrix = new int[numberOfEvents][numberOfEvents];
-
-        boolean [] visited = new boolean[numberOfEvents];
-
+        int [][] Timeline  = new int [numberOfEvents][2];
         for(int i = 0; i < numberOfEvents; i++){
-
-            eventNumberAndValue[i] = StdIn.readInt();
-
-        }
-
-        for(int i = 0; i < numberOfEvents; i++){
-            for(int j = 0; j < numberOfEvents; j++){
-
-                adjMatrix[i][j] = StdIn.readInt();
-
-            }
-        }
-
-        for(int i = 0; i < numberOfEvents; i++){
-
-            if(!visited[i]){
-                
-                dfs(i,visited, adjMatrix);
-                possibleTimelines += 1;
-
-            }
             
+            Timeline[i][0] = StdIn.readInt();
+            Timeline[i][1] = StdIn.readInt();
+         
+      }
+
+      int [][] TwoArray  = new int [numberOfEvents][numberOfEvents];
+      for(int i = 0; i < numberOfEvents; i++){
+          for(int j = 0; j < numberOfEvents; j++){
+          TwoArray[i][j] = StdIn.readInt();
+       }
+    }
+
+        ArrayList<String> Paths = new ArrayList<String>();
+        ArrayList<Integer> eUvals = new ArrayList<Integer>();
+
+
+        Paths.add("0");
+        eUvals.add(Timeline[0][1]);
+        int index = 0;
+        int counter = 1;
+        int eV = Timeline[0][1];
+        int a = 0;
+       
+        vaLues(TwoArray, Timeline, eUvals, eV, index); 
+
+        int plzbecorrect = getPaths(TwoArray, counter, index);
+        for(int i = 0; i < eUvals.size(); i++){
+            if(eUvals.get(i)>= expectedUtility){
+                a++;
+            }
         }
-
+        
         StdOut.setFile(UseTimeStoneOutputFile);
-        StdOut.println(possibleTimelines);
-        StdOut.println(greaterThanEU);
-
+        StdOut.println(plzbecorrect); 
+        StdOut.print(a);
+       
+        //StdOut.println(vaLues(TwoArray, Timeline, eUvals, euVal, index));
 
     }
+
+    private static int getPaths(int[][] TwoArray, int counter, int index){
+        for(int i = 0; i < TwoArray.length; i++){
+            if(TwoArray[index][i] ==1){
+                counter++;
+                counter =  getPaths(TwoArray, counter, i);
+            }
+        }
+        return counter;
+        }
+
+    private static ArrayList<Integer> vaLues(int[][] TwoArray, int [][] Timeline, ArrayList<Integer> euVals, int eV, int index){
+            for(int i  = 0; i < TwoArray[0].length; i++){
+                if(TwoArray[index][i] == 1){
+                    int val =  eV + Timeline[i][1];
+                    euVals.add(val); 
+                    vaLues(TwoArray, Timeline, euVals, val, i);
+                }
+        }
+        return euVals;
+    }
+
+
 }
+        
+        
